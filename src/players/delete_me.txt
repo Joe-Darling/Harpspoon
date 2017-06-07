@@ -1,0 +1,5 @@
+Git will not add empty directories to a repository.  The purpose of this file
+is to create the enclosing directories in the repository.
+
+Once some other file (e.g. a Java class) is created in this directory, this
+file may be safely deleted.
