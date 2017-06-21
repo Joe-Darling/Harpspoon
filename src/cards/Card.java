@@ -1,5 +1,7 @@
 package cards;
 
+
+import cards.Powers.Power;
 import game.MainGame;
 
 import java.util.*;
@@ -23,14 +25,14 @@ enum Rarity{
 public abstract class Card {
 
     // Names for cards without abilities.
-    private static final List<String> basicCardNames = new ArrayList<String>(Arrays.asList(
+    private final List<String> basicCardNames = new ArrayList<String>(Arrays.asList(
             "Henry", "Jenn", "Carrie", "William", "Samantha", "Michelle", "Barry",
             "Michael", "Daniel", "Victoria", "Ben", "Patrick", "Edward", "Nick",
             "Lenard", "George", "Mary", "Alyssa", "Ted", "Robin"));
 
     // Names for cards with abilities. Each ability is associated with a name.
-    private static final Map<String, String> rareNames = createMap();
-    private static Map<String, String> createMap(){
+    private final Map<String, String> rareNames = createMap();
+    private Map<String, String> createMap(){
         Map<String, String> map = new HashMap<>();
         map.put("Vigor", "Russel - The Conquer");
         map.put("Lucky", "Victor - The Victor");
@@ -51,6 +53,8 @@ public abstract class Card {
     private int currHealth;
     private int baseAttack;
     private int bonusAttack; // Used for temporary buffs
+    private int bonusResistance;
+    private boolean invincible;
     private int cost;
     private Rarity rarity;
     private String powerName;
@@ -68,6 +72,8 @@ public abstract class Card {
         this.baseAttack = statPoints - extraHealth;
 
         this.bonusAttack = 0;
+        this.bonusResistance = 0;
+        this.invincible = false;
         this.cost = cost;
         this.rarity = rarity;
         this.powerName = powerName;
@@ -109,6 +115,14 @@ public abstract class Card {
 
     public void setBonusAttack(int bonus){
         bonusAttack += bonus;
+    }
+
+    public int getBonusResistance() {
+        return bonusResistance;
+    }
+
+    public void setBonusResistance(int bonusResistance) {
+        this.bonusResistance = bonusResistance;
     }
 
     public int getCost() {
@@ -164,14 +178,17 @@ public abstract class Card {
     }
 
     public void prepare(){
-        if(powerName.equals("Wrath")){
-            System.out.println(name + " has Wrath! Damaged increased by 1.");
-            baseAttack += 1;
-        }
+        if(power.shouldEffectTrigger(this, Power.CardState.TURN_START))
+            power.triggerEffect(this);
         bonusAttack = 0;
+        bonusResistance = 0;
     }
 
-    public Card spawnCard(){
+    public Card spawnCard(){ // Currently wrong. Would use them at incorrect times.
+        if(powerName.equals("Companion"))
+            return new CommonCard(); // Replace with legendary when at that step
+        else if(powerName.equals("Mommy!"))
+            return new CommonCard();
         return null;
     }
 
