@@ -16,7 +16,7 @@ public abstract class Player {
     private static final int CARDS_IN_DECK = 40;
 
     private String name;
-    private final int startingScore = 30;
+    private final int startingScore = 100;
     private int currScore;
     private List<Card> deck;
     private List<Card> hand;

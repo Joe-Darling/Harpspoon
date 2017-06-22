@@ -130,6 +130,14 @@ public abstract class Card {
         this.bonusResistance = bonusResistance;
     }
 
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+    }
+
     public int getCost() {
         return cost;
     }
