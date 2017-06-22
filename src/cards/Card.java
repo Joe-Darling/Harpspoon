@@ -110,8 +110,16 @@ public abstract class Card {
         return currHealth;
     }
 
+    public void gainCurrHealth(int amount){
+        currHealth += amount;
+    }
+
     public int getBaseAttack() {
         return baseAttack;
+    }
+
+    public void setBaseAttack(int baseAttack){
+        this.baseAttack = baseAttack;
     }
 
     public int getBonusAttack() {

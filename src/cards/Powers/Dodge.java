@@ -9,11 +9,11 @@ import game.MainGame;
 public class Dodge extends Power {
 
     public boolean shouldEffectTrigger(Card card, CardState state) {
-        return state == CardState.ON_TARGETED && MainGame.nextInt(1,100) > 15;
+        return state == CardState.ON_TARGETED && MainGame.nextInt(1,100) > 85;
     }
 
     public void triggerEffect(Card card) {
         card.setInvincible(true);
-        System.out.println(card.getName() + " Dodges the damage and takes no damage!");
+        System.out.println(card.getName() + " ninja dodges the attack and takes no damage!");
     }
 }
