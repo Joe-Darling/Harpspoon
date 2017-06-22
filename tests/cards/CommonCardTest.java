@@ -9,7 +9,7 @@ public class CommonCardTest {
 
     // This method tests the CommonCard class and the card class.
     public static void main(String[] args) {
-        MainGame.rng.setSeed(MainGame.SEED);
+        MainGame.rng.setSeed(0);
         CommonCard c1 = new CommonCard();
         System.out.println(c1);
         System.out.println("Card name is Victoria? " + (c1.getName().equals("Victoria") ? "OK":"NO"));

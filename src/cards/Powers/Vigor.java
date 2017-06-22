@@ -23,5 +23,6 @@ public class Vigor extends Power {
     public void triggerEffect(Card card) {
         card.setBonusAttack(card.getBonusAttack() + 1);
         System.out.println(card.getName() + " has Vigor! Damaged increased by 1 this turn.");
+        usedEffect = true;
     }
 }

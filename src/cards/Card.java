@@ -1,7 +1,9 @@
 package cards;
 
 
+import cards.Powers.Lucky;
 import cards.Powers.Power;
+import cards.Powers.Vigor;
 import game.MainGame;
 
 import java.util.*;
@@ -85,7 +87,10 @@ public abstract class Card {
             this.name = rareNames.get(powerName);
             switch (powerName){
                 case "Vigor":
+                    power = new Vigor();
                     break;
+                case "Lucky":
+                    power = new Lucky();
             }
         }
 
@@ -194,6 +199,6 @@ public abstract class Card {
 
     public String toString(){
         return "Card name: " + name + " is a " + cost + " mana " + baseAttack + "/" + baseHealth +
-                ", rarity: " + rarity + ", power: " + power + ", abbrev: " + abbrevRep;
+                ", rarity: " + rarity + ", power: " + powerName + ", abbrev: " + abbrevRep;
     }
 }
