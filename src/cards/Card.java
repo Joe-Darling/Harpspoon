@@ -94,9 +94,7 @@ public abstract class Card {
                     power = new Lucky();
             }
         }
-
         setAbbrevRep();
-
     }
 
     public String getName() {
@@ -189,10 +187,10 @@ public abstract class Card {
         bonusResistance = 0;
     }
 
-    public Card spawnCard(){ // Currently wrong. Would use them at incorrect times.
-        if(powerName.equals("Companion"))
+    public Card spawnCard(Power.CardState state){ // Currently wrong. Would use them at incorrect times.
+        if(powerName.equals("Companion") && state == Power.CardState.ON_SPAWN)
             return new CommonCard(); // Replace with legendary when at that step
-        else if(powerName.equals("Mommy!"))
+        else if(powerName.equals("Mommy!") && state == Power.CardState.ON_DEATH)
             return new CommonCard();
         return null;
     }
