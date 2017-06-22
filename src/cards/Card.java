@@ -5,6 +5,7 @@ import cards.Powers.Lucky;
 import cards.Powers.Power;
 import cards.Powers.Vigor;
 import game.MainGame;
+import players.Player;
 
 import java.util.*;
 
@@ -175,7 +176,6 @@ public abstract class Card {
         currHealth -= damage;
         if(currHealth < 0){
             currHealth = 0;
-            // Destroy unit
         }
         if(remainingDamage < 0)
             return 0;
@@ -198,7 +198,7 @@ public abstract class Card {
     }
 
     public String toString(){
-        return "Card name: " + name + " is a " + cost + " mana " + baseAttack + "/" + baseHealth +
+        return name + " is a " + cost + " mana " + baseAttack + "/" + baseHealth +
                 ", rarity: " + rarity + ", power: " + powerName + ", abbrev: " + abbrevRep;
     }
 }
