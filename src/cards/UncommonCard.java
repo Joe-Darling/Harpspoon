@@ -11,16 +11,16 @@ import java.util.List;
  *
  */
 public class UncommonCard extends Card{
-    private static final int statDistribution = 11;
-    private static final int minCost = 2;
-    private static final int maxCost = 5;
-    private static final List<String> powers = new ArrayList<String>(Arrays.asList(
+    private static final int STAT_DISTRIBUTION = 11;
+    private static final int MIN_COST = 2;
+    private static final int MAX_COST = 5;
+    private static final List<String> POWERS = new ArrayList<String>(Arrays.asList(
             "Vigor", "Lucky", "None", "None"));
 
     public UncommonCard(){
-        super(statDistribution,
-                MainGame.nextInt(minCost, maxCost),
+        super(STAT_DISTRIBUTION,
+                MainGame.nextInt(MIN_COST, MAX_COST),
                 Rarity.UNCOMMON,
-                powers.get(MainGame.nextInt(0, powers.size() - 1)));
+                POWERS.get(MainGame.nextInt(0, POWERS.size() - 1)));
     }
 }
