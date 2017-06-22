@@ -2,6 +2,7 @@ package cards;
 
 
 import cards.Powers.Lucky;
+import cards.Powers.NoPower;
 import cards.Powers.Power;
 import cards.Powers.Vigor;
 import game.MainGame;
@@ -82,7 +83,7 @@ public abstract class Card {
         this.powerName = powerName;
         if(powerName.equals("None")) {
             this.name = basicCardNames.get(MainGame.nextInt(0, basicCardNames.size() - 1));
-            power = null;
+            power = new NoPower();
         }
         else{
             this.name = rareNames.get(powerName);
