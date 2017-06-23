@@ -18,6 +18,7 @@ public class Companion extends Power{
         String name = "Buttercup!";
         int baseHealth = 24;
         int baseAttack = 0;
+        System.out.println(card.getName() + " didn't come alone. He brought his companion Buttercup!");
         return new LegendaryCard(name, baseHealth, baseAttack, Card.Rarity.LEGENDARY, "Bubble", new Bubble());
     }
 }

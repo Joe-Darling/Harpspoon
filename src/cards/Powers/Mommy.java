@@ -20,6 +20,7 @@ public class Mommy extends Power{
         int baseAttack = card.getBaseAttack() - 5;
         if(baseAttack < 0)
             baseAttack = 0;
+        System.out.println("As " + card.getName() + " falls, his mom, " + name + "rises from the ashes!");
         return new LegendaryCard(name, baseHealth, baseAttack, Card.Rarity.LEGENDARY, "Wrath", new Wrath());
     }
 }
