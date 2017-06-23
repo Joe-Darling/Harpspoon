@@ -1,7 +1,7 @@
 package cards.Powers;
 
 import cards.Card;
-import game.MainGame;
+import game.Harpspoon;
 
 /**
  * Created by Joe on 6/22/2017.
@@ -9,7 +9,7 @@ import game.MainGame;
 public class Dodge extends Power {
 
     public boolean shouldEffectTrigger(Card card, CardState state) {
-        return state == CardState.ON_TARGETED && MainGame.nextInt(1,100) > 85;
+        return state == CardState.ON_TARGETED && Harpspoon.nextInt(1,100) > 85;
     }
 
     public void triggerEffect(Card card) {

@@ -1,6 +1,6 @@
 package cards;
 
-import game.MainGame;
+import game.Harpspoon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +18,8 @@ public class RareCard extends Card {
 
     public RareCard(){
         super(STAT_DISTRIBUTION,
-                MainGame.nextInt(MIN_COST, MAX_COST),
+                Harpspoon.nextInt(MIN_COST, MAX_COST),
                 Rarity.RARE,
-                POWERS.get(MainGame.nextInt(0, POWERS.size() - 1)));
+                POWERS.get(Harpspoon.nextInt(0, POWERS.size() - 1)));
     }
 }

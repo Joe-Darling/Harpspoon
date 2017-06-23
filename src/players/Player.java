@@ -1,10 +1,7 @@
 package players;
 
-import cards.Card;
-import cards.CommonCard;
-import cards.RareCard;
-import cards.UncommonCard;
-import game.MainGame;
+import cards.*;
+import game.Harpspoon;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +34,12 @@ public abstract class Player {
                 deck.add(new CommonCard());
             else if(i < 32)
                 deck.add(new UncommonCard());
-            else
+            else if(i < 39)
                 deck.add(new RareCard());
+            else
+                deck.add(new LegendaryCard());
         }
-        Collections.shuffle(deck, MainGame.rng);
+        Collections.shuffle(deck, Harpspoon.rng);
 
         hand = new ArrayList<>();
         for(int i = 0; i < 4; i++){

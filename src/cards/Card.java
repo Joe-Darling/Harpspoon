@@ -1,32 +1,29 @@
 package cards;
 
 
-import cards.Powers.Lucky;
-import cards.Powers.NoPower;
-import cards.Powers.Power;
-import cards.Powers.Vigor;
-import game.MainGame;
-import players.Player;
+import cards.Powers.*;
+import game.Harpspoon;
 
 import java.util.*;
 
 /**
  * Created by Joe on 6/21/2017.
  */
-enum Rarity{
-    COMMON("C"), UNCOMMON("U"), RARE("R"), LEGENDARY("L");
-
-    private final String label;
-    Rarity(String label){
-        this.label = label;
-    }
-    public String getLabel(){
-        return label;
-    }
-
-}
 
 public abstract class Card {
+
+    public enum Rarity{
+        COMMON("C"), UNCOMMON("U"), RARE("R"), LEGENDARY("L");
+
+        private final String label;
+        Rarity(String label){
+            this.label = label;
+        }
+        public String getLabel(){
+            return label;
+        }
+
+    }
 
     // Names for cards without abilities.
     private final List<String> basicCardNames = new ArrayList<String>(Arrays.asList(
@@ -70,7 +67,7 @@ public abstract class Card {
         // We deduct 1 because at least 1 health point must go into the health of the card so it can't be random
         // Next we set the base and current health to the randomly generated number plus the 1 constant health
         // Finally we set the attack to the rest of the unused stat points (remainder = total - used)
-        int extraHealth = MainGame.nextInt(0, statPoints);
+        int extraHealth = Harpspoon.nextInt(0, statPoints);
         this.baseHealth = 1 + extraHealth;
         this.currHealth = baseHealth;
         this.baseAttack = statPoints - extraHealth;
@@ -82,19 +79,60 @@ public abstract class Card {
         this.rarity = rarity;
         this.powerName = powerName;
         if(powerName.equals("None")) {
-            this.name = basicCardNames.get(MainGame.nextInt(0, basicCardNames.size() - 1));
+            this.name = basicCardNames.get(Harpspoon.nextInt(0, basicCardNames.size() - 1));
             power = new NoPower();
         }
         else{
             this.name = rareNames.get(powerName);
             switch (powerName){
-                case "Vigor":
-                    power = new Vigor();
+                case "Angry":
+                    power = new Angry(baseHealth);
+                    break;
+                case "Bubble":
+                    power = new Bubble();
+                    break;
+                case "Companion":
+                    power = new Companion();
+                    break;
+                case "Dodge":
+                    power = new Dodge();
                     break;
                 case "Lucky":
                     power = new Lucky();
+                    break;
+                case "Mommy":
+                    power = new Mommy();
+                    break;
+                case "Undying":
+                    power = new Undying();
+                    break;
+                case "Vengeful":
+                    power = new Vengeful(baseHealth);
+                    break;
+                case "Vigor":
+                    power = new Vigor();
+                    break;
+                case "Wrath":
+                    power = new Wrath();
+                    break;
             }
         }
+        setAbbrevRep();
+    }
+
+    // Constructor for creating card on the fly (used for spawned cards)
+    public Card(String name, int baseHealth, int baseAttack, Rarity rarity, String powerName, Power power){
+        this.name = name;
+        this.baseHealth = baseHealth;
+        currHealth = baseHealth;
+        this.baseAttack = baseAttack;
+        bonusAttack = 0;
+        bonusResistance = 0;
+        invincible = false;
+        cost = 0;
+        this.rarity = rarity;
+        this.powerName = powerName;
+        this.power = power;
         setAbbrevRep();
     }
 
@@ -202,14 +240,6 @@ public abstract class Card {
             power.triggerEffect(this);
         bonusAttack = 0;
         bonusResistance = 0;
-    }
-
-    public Card spawnCard(Power.CardState state){ // Currently wrong. Would use them at incorrect times.
-        if(powerName.equals("Companion") && state == Power.CardState.ON_SPAWN)
-            return new CommonCard(); // Replace with legendary when at that step
-        else if(powerName.equals("Mommy!") && state == Power.CardState.ON_DEATH)
-            return new CommonCard();
-        return null;
     }
 
     public String inGamePrint(){

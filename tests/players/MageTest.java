@@ -1,7 +1,7 @@
 package players;
 
 import cards.Card;
-import game.MainGame;
+import game.Harpspoon;
 
 /**
  * Created by Joe on 6/21/2017.
@@ -9,7 +9,7 @@ import game.MainGame;
  */
 public class MageTest {
     public static void main(String[] args) {
-        MainGame.rng.setSeed(2);
+        Harpspoon.rng.setSeed(2);
         Player p1 = new Mage(2);
         p1.newRound();
         for(Card card : p1.getHand())

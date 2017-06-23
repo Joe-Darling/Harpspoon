@@ -1,14 +1,14 @@
 package players;
 
 import cards.Card;
-import game.MainGame;
+import game.Harpspoon;
 
 /**
  * Created by Joe on 6/23/2017.
  */
 public class HumanTest {
     public static void main(String[] args) {
-        MainGame.rng.setSeed(3);
+        Harpspoon.rng.setSeed(3);
         Player p1 = new Human();
 
         System.out.println("You entered '" + p1.getName() + "', right?");

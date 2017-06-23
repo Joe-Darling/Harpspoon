@@ -17,6 +17,7 @@ public class Angry extends Power {
 
     public boolean shouldEffectTrigger(Card card, CardState state) {
         int damageTaken = lastCurrHealth - card.getCurrHealth();
+        lastCurrHealth = card.getCurrHealth();
         return state == CardState.ON_ATTACKED && !usedEffect && damageTaken >= (card.getBaseHealth() / 2);
     }
 
