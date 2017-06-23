@@ -2,6 +2,7 @@ package players;
 
 import cards.Card;
 import cards.CommonCard;
+import cards.RareCard;
 import cards.UncommonCard;
 import game.MainGame;
 
@@ -26,15 +27,18 @@ public abstract class Player {
     private int currMana;
 
     public Player(String name){
+        this.name = name;
         currScore = startingScore;
 
         // We create, add cards to, and then randomize the deck.
         deck = new ArrayList<>(CARDS_IN_DECK);
         for(int i = 0; i < CARDS_IN_DECK; i++){ // Remember to change after implementing other card types.
-            if(i < 30)
+            if(i < 20)
                 deck.add(new CommonCard());
-            else
+            else if(i < 32)
                 deck.add(new UncommonCard());
+            else
+                deck.add(new RareCard());
         }
         Collections.shuffle(deck, MainGame.rng);
 
@@ -78,6 +82,10 @@ public abstract class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public int getCurrScore() {
