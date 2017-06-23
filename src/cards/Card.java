@@ -212,8 +212,12 @@ public abstract class Card {
         return null;
     }
 
+    public String inGamePrint(){
+        return name + ", " + cost + " mana " + baseAttack + "/" + currHealth + ". Power: " + powerName;
+    }
+
     public String toString(){
-        return name + " is a " + cost + " mana " + baseAttack + "/" + baseHealth +
+        return name + " is a " + cost + " mana " + baseAttack + "/" + currHealth +
                 ", rarity: " + rarity + ", power: " + powerName + ", abbrev: " + abbrevRep;
     }
 }
