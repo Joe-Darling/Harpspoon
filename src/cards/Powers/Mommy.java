@@ -12,9 +12,7 @@ public class Mommy extends Power{
         return state == CardState.ON_DEATH;
     }
 
-    public void triggerEffect(Card card) {}
-
-    public Card spawnCard(Card card){
+    public Card triggerEffect(Card card) {
         String name = card.getName() + "' Mom";
         int baseHealth = card.getBaseHealth() + 5;
         int baseAttack = card.getBaseAttack() - 5;

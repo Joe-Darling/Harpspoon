@@ -17,7 +17,7 @@ public class Human extends Player{
     }
 
     private String promptName(){
-        System.out.print("Enter name for player: ");
+        System.out.print("Enter name for human player: ");
         return scanner.next();
     }
 

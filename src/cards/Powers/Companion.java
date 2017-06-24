@@ -12,9 +12,7 @@ public class Companion extends Power{
         return state == CardState.ON_SPAWN;
     }
 
-    public void triggerEffect(Card card) {}
-
-    public Card spawnCard(Card card){
+    public Card triggerEffect(Card card) {
         String name = "Buttercup!";
         int baseHealth = 24;
         int baseAttack = 0;

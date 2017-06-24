@@ -21,8 +21,9 @@ public class Angry extends Power {
         return state == CardState.ON_ATTACKED && !usedEffect && damageTaken >= (card.getBaseHealth() / 2);
     }
 
-    public void triggerEffect(Card card) {
+    public Card triggerEffect(Card card) {
         System.out.println(card.getName() + " is angry! Attack increased by 2.");
         card.setBaseAttack(card.getBaseAttack() + 2);
+        return null;
     }
 }

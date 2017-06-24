@@ -14,8 +14,9 @@ public class Lucky extends Power {
     }
 
     // The effect gives a temporary defense boost of one.
-    public void triggerEffect(Card card) {
+    public Card triggerEffect(Card card) {
         card.setBonusResistance(card.getBonusResistance() + 1);
         System.out.println(card.getName() + " is Lucky! Damaged decreased by 1 this turn.");
+        return null;
     }
 }

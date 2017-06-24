@@ -21,8 +21,9 @@ public class Vengeful extends Power {
         return state == CardState.ON_ATTACKED && damageTaken > 0;
     }
 
-    public void triggerEffect(Card card) {
+    public Card triggerEffect(Card card) {
         System.out.println(card.getName() + " is Vengeful! Deals " + damageTaken + " increased damage next turn.");
         card.setBonusAttack(card.getBonusAttack() + (damageTaken / 2));
+        return null;
     }
 }

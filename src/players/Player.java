@@ -72,11 +72,13 @@ public abstract class Player {
         currMana -= card.getCost();
         hand.remove(card);
         cardsInPlay.add(card);
+        System.out.println(name + " summons " + card.getName() + "!");
     }
 
     public void discardCard(Card card){
         cardsInPlay.remove(card);
         discardPile.add(card);
+        System.out.println(card.getName() + " has fallen!");
     }
 
     public String getName() {

@@ -226,10 +226,15 @@ public abstract class Card {
 
     public int sustainDamage(int damage){
         int remainingDamage = damage - currHealth;
-        currHealth -= damage;
-        if(currHealth < 0){
-            currHealth = 0;
+        if(!invincible){
+            currHealth -= damage;
+            if(currHealth < 0){
+                currHealth = 0;
+            }
+            System.out.println(name + " takes " + damage + " damage!");
         }
+        else
+            System.out.println(name + " takes no damage!");
         if(remainingDamage < 0)
             return 0;
         return remainingDamage;

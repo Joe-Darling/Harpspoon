@@ -14,7 +14,7 @@ public class NoPower extends Power {
         return false;
     }
 
-    public void triggerEffect(Card card) {
-
+    public Card triggerEffect(Card card) {
+        return null;
     }
 }

@@ -20,9 +20,10 @@ public class Vigor extends Power {
     }
 
     // The effect gives a temporary attack boost of one.
-    public void triggerEffect(Card card) {
+    public Card triggerEffect(Card card) {
         card.setBonusAttack(card.getBonusAttack() + 1);
         System.out.println(card.getName() + " has Vigor! Damaged increased by 1 this turn.");
         usedEffect = true;
+        return null;
     }
 }

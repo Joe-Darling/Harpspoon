@@ -23,5 +23,5 @@ public abstract class Power {
     }
 
     public abstract boolean shouldEffectTrigger(Card card, CardState state);
-    public abstract void triggerEffect(Card card);
+    public abstract Card triggerEffect(Card card);
 }
