@@ -43,7 +43,8 @@ public class Mage extends Player {
                     bestPlay = card;
             }
         }
-
+        if(bestPlay == null)
+            System.out.println(getName() + " passes their turn.\n");
         return bestPlay;
     }
 }

@@ -1,6 +1,7 @@
 package players;
 
 import cards.*;
+import cards.Powers.Power;
 import game.Harpspoon;
 
 import java.util.ArrayList;
@@ -26,9 +27,27 @@ public abstract class Player {
     public Player(String name){
         this.name = name;
         currScore = startingScore;
+        totalMana = 0;
+        currMana = 0;
+        newGame();
+    }
+
+    public abstract Card playACard();
+    public abstract boolean continuePlaying();
+
+    public void loseHealth(int amount){
+        System.out.println(getName() + " is attacked directly for " + amount + " damage!");
+        currScore -= amount;
+        if(currScore < 0)
+            currScore = 0;
+        System.out.println(name + " has " + currScore + " life remaining.");
+    }
+
+    public void newGame(){
 
         // We create, add cards to, and then randomize the deck.
         deck = new ArrayList<>(CARDS_IN_DECK);
+
         for(int i = 0; i < CARDS_IN_DECK; i++){ // Remember to change after implementing other card types.
             if(i < 20)
                 deck.add(new CommonCard());
@@ -48,12 +67,7 @@ public abstract class Player {
 
         cardsInPlay = new ArrayList<>();
         discardPile = new ArrayList<>();
-        totalMana = 0;
-        currMana = 0;
     }
-
-    public abstract Card playACard();
-    public abstract boolean continuePlaying();
 
     public void newRound(){
         if(totalMana < 10)
@@ -72,7 +86,7 @@ public abstract class Player {
         currMana -= card.getCost();
         hand.remove(card);
         cardsInPlay.add(card);
-        System.out.println(name + " summons " + card.getName() + "!");
+        System.out.println(name + " summons " + card.inGamePrint() + "!");
     }
 
     public void discardCard(Card card){

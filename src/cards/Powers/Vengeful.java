@@ -22,7 +22,7 @@ public class Vengeful extends Power {
     }
 
     public Card triggerEffect(Card card) {
-        System.out.println(card.getName() + " is Vengeful! Deals " + damageTaken + " increased damage next turn.");
+        System.out.println(card.getName() + " is Vengeful! Deals " + (damageTaken / 2) + " extra damage next turn.");
         card.setBonusAttack(card.getBonusAttack() + (damageTaken / 2));
         return null;
     }

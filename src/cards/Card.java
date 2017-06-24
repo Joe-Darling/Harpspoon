@@ -200,6 +200,10 @@ public abstract class Card {
         return power;
     }
 
+    public void setPower(Power power){
+        this.power = power;
+    }
+
     public String getAbbrevRep() {
         return abbrevRep;
     }
@@ -225,16 +229,21 @@ public abstract class Card {
     }
 
     public int sustainDamage(int damage){
+        int healthBeforeHit = currHealth;
         int remainingDamage = damage - currHealth;
         if(!invincible){
-            currHealth -= damage;
+            currHealth = (currHealth - damage) + bonusResistance;
             if(currHealth < 0){
+                System.out.println(name + " takes " + (healthBeforeHit) + " damage!");
                 currHealth = 0;
             }
-            System.out.println(name + " takes " + damage + " damage!");
+            else
+                System.out.println(name + " take " + (damage - bonusResistance) + " damage!");
         }
-        else
+        else{
             System.out.println(name + " takes no damage!");
+            invincible = false;
+        }
         if(remainingDamage < 0)
             return 0;
         return remainingDamage;
@@ -248,7 +257,7 @@ public abstract class Card {
     }
 
     public String inGamePrint(){
-        return name + ", " + cost + " mana " + baseAttack + "/" + currHealth + ". Power: " + powerName;
+        return name + ", a " + cost + " mana " + baseAttack + "/" + currHealth + ". with power: " + powerName;
     }
 
     public String toString(){

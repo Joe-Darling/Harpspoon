@@ -13,10 +13,10 @@ public class Companion extends Power{
     }
 
     public Card triggerEffect(Card card) {
-        String name = "Buttercup!";
+        String name = "Buttercup"; // Note I purposefully took off the exclamation point for formatting reasons
         int baseHealth = 24;
         int baseAttack = 0;
-        System.out.println(card.getName() + " didn't come alone. He brought his companion Buttercup!");
+        System.out.println(card.getName() + " didn't come alone. She brought her companion Buttercup!");
         return new LegendaryCard(name, baseHealth, baseAttack, Card.Rarity.LEGENDARY, "Bubble", new Bubble());
     }
 }

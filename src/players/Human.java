@@ -30,16 +30,16 @@ public class Human extends Player{
         System.out.print("Selection: ");
         int cardNum = scanner.nextInt();
         if(cardNum == 0){
-            System.out.println("You pass your turn.");
+            System.out.println(getName() + " passes their turn.\n");
             return null;
         }
         if(cardNum > getHand().size() || cardNum < 0){
-            System.out.println("Invalid input, card not in range. You miss your turn.");
+            System.out.println("Invalid input, card not in range. You miss your turn.\n");
             return null;
         }
         Card card = getHand().get(cardNum - 1);
         if(card.getCost() > getCurrMana()){
-            System.out.println("Invalid Card Selected, it costs more mana than you have. You miss your turn.");
+            System.out.println("Invalid Card Selected, it costs more mana than you have. You miss your turn.\n");
             return null;
         }
         return card;
