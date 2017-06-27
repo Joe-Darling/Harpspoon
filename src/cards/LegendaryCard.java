@@ -14,7 +14,7 @@ public class LegendaryCard extends Card{
     private static final int STAT_DISTRIBUTION = 23;
     private static final int COST = 10;
     private static final List<String> POWERS = new ArrayList<String>(Arrays.asList(
-            "Wrath", "Mommy!", "Bubble", "Companion", "Vengeful"));
+            "Wrath", "Mommy", "Bubble", "Companion", "Vengeful"));
 
     public LegendaryCard(){
         super(STAT_DISTRIBUTION,

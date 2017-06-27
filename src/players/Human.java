@@ -22,7 +22,7 @@ public class Human extends Player{
     }
 
     public Card playACard() {
-        System.out.println("You have " + getCurrMana() + "/" + getTotalMana() +
+        System.out.println(getName() + ", you have " + getCurrMana() + "/" + getTotalMana() +
                 " mana left this turn. Pick a card by selecting index. or enter 0 to pass.");
         for(int i = 0; i < getHand().size(); i++){
             System.out.println((i + 1) + ") " + getHand().get(i).inGamePrint());
@@ -30,7 +30,7 @@ public class Human extends Player{
         System.out.print("Selection: ");
         int cardNum = scanner.nextInt();
         if(cardNum == 0){
-            System.out.println(getName() + " passes their turn.\n");
+            System.out.println(getName() + " passes their turn.");
             return null;
         }
         if(cardNum > getHand().size() || cardNum < 0){

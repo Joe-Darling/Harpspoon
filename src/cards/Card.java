@@ -239,6 +239,7 @@ public abstract class Card {
             }
             else
                 System.out.println(name + " take " + (damage - bonusResistance) + " damage!");
+            bonusResistance = 0;
         }
         else{
             System.out.println(name + " takes no damage!");
@@ -247,13 +248,6 @@ public abstract class Card {
         if(remainingDamage < 0)
             return 0;
         return remainingDamage;
-    }
-
-    public void prepare(){
-        if(power.shouldEffectTrigger(this, Power.CardState.TURN_START))
-            power.triggerEffect(this);
-        bonusAttack = 0;
-        bonusResistance = 0;
     }
 
     public String inGamePrint(){

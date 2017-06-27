@@ -28,6 +28,8 @@ public class Harpspoon {
     private Player player2;
     private int player1TotalScore;
     private int player2TotalScore;
+    private boolean pauseForDrama;
+    // private int turnCounter;
 
     public Harpspoon(){
         scanner = new Scanner(System.in);
@@ -54,6 +56,10 @@ public class Harpspoon {
             System.out.println("Both players have the same name, player two's name is adjusted for clarity");
             player2.setName(player2.getName() + "2");
         }
+        scanner.nextLine();
+        System.out.print("Pause for dramatic effect? (Y/N): ");
+        pauseForDrama = scanner.next().toUpperCase().equals("Y");
+        System.out.print("\n");
     }
 
     private Player getPlayer(){
@@ -67,6 +73,8 @@ public class Harpspoon {
             case "mage":
                 return new Mage(gamesToPlay);
             default:
+                System.out.println("Invalid input, exiting game.");
+                System.exit(0);
                 break;
         }
         return null;
@@ -78,11 +86,13 @@ public class Harpspoon {
             player1.newRound();
             player2.newRound();
 
-            // Then for each card in play we call their prepare method
+            // Then for each card in play we check if they have a turn start effect
             for(Card card : player1.getCardsInPlay())
-                card.prepare();
+                if(card.getPower().shouldEffectTrigger(card, Power.CardState.TURN_START))
+                    card.getPower().triggerEffect(card);
             for(Card card : player2.getCardsInPlay())
-                card.prepare();
+                if(card.getPower().shouldEffectTrigger(card, Power.CardState.TURN_START))
+                    card.getPower().triggerEffect(card);
 
             // We then display the current field state.
             displayField();
@@ -99,8 +109,6 @@ public class Harpspoon {
             player2.newGame();
             game();
         }
-        System.out.println("Thanks for playing!");
-        System.exit(0);
     }
 
     private void takeTurn(Player player){
@@ -109,12 +117,14 @@ public class Harpspoon {
             card = player.playACard();
             if(card != null) {
                 player.summonCard(card);
+                pauseForDramaticEffect();
                 if (card.getPower().shouldEffectTrigger(card, Power.CardState.ON_SPAWN)){
                     player.summonCard(card.getPower().triggerEffect(card));
                     pauseForDramaticEffect();
                 }
             }
         }while(card != null && player.getCurrMana() > 0 && player.getHand().size() > 0);
+        System.out.print("\n");
     }
 
     private void battle(){
@@ -127,6 +137,7 @@ public class Harpspoon {
                 pauseForDramaticEffect();
             }
             player1Damage += card.getBaseAttack() + card.getBonusAttack();
+            card.setBonusAttack(0);
         }
         for(Card card : player2.getCardsInPlay()){
             if(card.getPower().shouldEffectTrigger(card, Power.CardState.ON_ATTACK)){
@@ -134,6 +145,7 @@ public class Harpspoon {
                 pauseForDramaticEffect();
             }
             player2Damage += card.getBaseAttack() + card.getBonusAttack();
+            card.setBonusAttack(0);
         }
         dealDamage(player1, player2, player1Damage);
         dealDamage(player2, player1, player2Damage);
@@ -143,6 +155,7 @@ public class Harpspoon {
         if(playerDamage == 0)
             return;
         System.out.println(p1.getName() + " begins his attack!" );
+        pauseForDramaticEffect();
         for(int ind = 0; playerDamage > 0; ind++){
             if(ind >= p2.getCardsInPlay().size()){
                 p2.loseHealth(playerDamage);
@@ -176,14 +189,14 @@ public class Harpspoon {
 
     private void displayField(){
         // We print player twos field first so that p1 (who will be human in 1 human vs. 1 ai) will be on bottom
-        System.out.print(player2.getName() + "'s Board: ");
-        for(Card card : player2.getCardsInPlay()){
+        System.out.print(player1.getName() + "'s Board: ");
+        for(Card card : player1.getCardsInPlay()){
             card.setAbbrevRep();
             System.out.print(card.getAbbrevRep() + " ");
         }
         System.out.println();
-        System.out.print(player1.getName() + "'s Board: ");
-        for(Card card : player1.getCardsInPlay()){
+        System.out.print(player2.getName() + "'s Board: ");
+        for(Card card : player2.getCardsInPlay()){
             card.setAbbrevRep();
             System.out.print(card.getAbbrevRep() + " ");
         }
@@ -193,13 +206,15 @@ public class Harpspoon {
     }
 
     private void pauseForDramaticEffect(){
-        try
-        {
-            Thread.sleep(1000);
-        }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
+        if(pauseForDrama){
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
@@ -208,5 +223,6 @@ public class Harpspoon {
         System.out.println("Welcome to Harpspoon!");
         Harpspoon harpspoon = new Harpspoon();
         harpspoon.game();
+        System.out.println("Thanks for playing!");
     }
 }

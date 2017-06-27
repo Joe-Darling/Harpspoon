@@ -26,9 +26,6 @@ public abstract class Player {
 
     public Player(String name){
         this.name = name;
-        currScore = startingScore;
-        totalMana = 0;
-        currMana = 0;
         newGame();
     }
 
@@ -44,6 +41,10 @@ public abstract class Player {
     }
 
     public void newGame(){
+
+        currScore = startingScore;
+        totalMana = 0;
+        currMana = 0;
 
         // We create, add cards to, and then randomize the deck.
         deck = new ArrayList<>(CARDS_IN_DECK);

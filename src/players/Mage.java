@@ -16,16 +16,8 @@ public class Mage extends Player {
     }
 
     public boolean continuePlaying() {
-        if(gamesToPlay == -1)
-            return true;
-        else{
-            if(gamesToPlay == 0)
-                return false;
-            else{
-                gamesToPlay -= 1;
-                return true;
-            }
-        }
+        gamesToPlay--;
+        return gamesToPlay == -1 || gamesToPlay != 0;
     }
 
     public Card playACard() {
