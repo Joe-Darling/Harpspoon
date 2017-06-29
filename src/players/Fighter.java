@@ -1,15 +1,14 @@
 package players;
 
 import cards.Card;
-import cards.CommonCard;
 
 /**
- * Created by Joe on 6/21/2017.
+ * Created by Joe on 6/29/2017.
  */
-public class Mage extends ComputerPlayer{
+public class Fighter extends ComputerPlayer{
 
-    public Mage(int gamesToPlay){
-        super("Mage", gamesToPlay);
+    public Fighter(int gamesToPlay){
+        super("Fighter", gamesToPlay);
     }
 
     public Card playACard() {
@@ -19,11 +18,11 @@ public class Mage extends ComputerPlayer{
                 if(card.getCost() <= getCurrMana()) // Check if any card has legal mana cost
                     bestPlay = card; // and set it as our best
             }
-            else{ // Otherwise set it to the highest cost card that is within our current mana
-                if(card.getCost() > bestPlay.getCost() && card.getCost() <= getCurrMana())
+            else{ // Otherwise set it to the highest attack card that is within our current mana
+                if(card.getBaseAttack() > bestPlay.getBaseAttack() && card.getCost() <= getCurrMana())
                     bestPlay = card;
-                // In case of a tie in cost the higher attack wins.
-                else if(card.getCost() == bestPlay.getCost() && card.getBaseAttack() > bestPlay.getBaseAttack())
+                    // In case of a tie in attack the higher health wins.
+                else if(card.getCost() == bestPlay.getCost() && card.getBaseHealth() > bestPlay.getBaseHealth())
                     bestPlay = card;
             }
         }
