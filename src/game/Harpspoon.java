@@ -3,9 +3,7 @@ package game;
 import cards.Card;
 import cards.CommonCard;
 import cards.Powers.Power;
-import players.Human;
-import players.Mage;
-import players.Player;
+import players.*;
 
 import java.util.*;
 
@@ -29,7 +27,7 @@ public class Harpspoon {
     private int player1TotalScore;
     private int player2TotalScore;
     private boolean pauseForDrama;
-    // private int turnCounter;
+    private int turnCounter;
 
     public Harpspoon(){
         scanner = new Scanner(System.in);
@@ -72,6 +70,10 @@ public class Harpspoon {
         switch(aiClass){
             case "mage":
                 return new Mage(gamesToPlay);
+            case "cleric":
+                return new Cleric(gamesToPlay);
+            case "fighter":
+                return new Fighter(gamesToPlay);
             default:
                 System.out.println("Invalid input, exiting game.");
                 System.exit(0);
@@ -103,6 +105,16 @@ public class Harpspoon {
 
             // Finally we battle with the cards both players have summoned.
             battle();
+        }
+        if(player1.getCurrScore() == player2.getCurrScore()) { // If the game was a draw
+            // Both players get one total point
+            player1TotalScore++;
+            player2TotalScore++;
+        }
+        else{
+            // Both players total score are incremented by the result of the match
+            player1TotalScore += player1.getCurrScore();
+            player2TotalScore += player2.getCurrScore();
         }
         if(player1.continuePlaying() && player2.continuePlaying()){
             player1.newGame();
@@ -189,6 +201,7 @@ public class Harpspoon {
 
     private void displayField(){
         // We print player twos field first so that p1 (who will be human in 1 human vs. 1 ai) will be on bottom
+        System.out.println("Turn: " + ++turnCounter);
         System.out.print(player1.getName() + "'s Board: ");
         for(Card card : player1.getCardsInPlay()){
             card.setAbbrevRep();
