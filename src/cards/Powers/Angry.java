@@ -25,6 +25,7 @@ public class Angry extends Power {
     public Card triggerEffect(Card card) {
         System.out.println(card.getName() + " is angry! Attack increased by 2.");
         card.setBaseAttack(card.getBaseAttack() + 2);
+        usedEffect = true;
         return null;
     }
 }

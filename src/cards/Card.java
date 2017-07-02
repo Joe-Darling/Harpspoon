@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * Created by Joe on 6/21/2017.
+ * Base card class
  */
 
 public abstract class Card {
@@ -25,14 +26,6 @@ public abstract class Card {
 
     }
 
-    // Names for cards without abilities.
-    private final List<String> basicCardNames = new ArrayList<String>(Arrays.asList(
-            "Henry", "Jenn", "Carrie", "William", "Samantha", "Michelle", "Barry",
-            "Michael", "Daniel", "Victoria", "Ben", "Patrick", "Edward", "Nick",
-            "Lenard", "George", "Mary", "Alyssa", "Ted", "Robin"));
-
-    // Names for cards with abilities. Each ability is associated with a name.
-    private final Map<String, String> rareNames = createMap();
     private Map<String, String> createMap(){
         Map<String, String> map = new HashMap<>();
         map.put("Vigor", "Russel - The Conquer");
@@ -55,7 +48,7 @@ public abstract class Card {
     private int baseAttack;
     private int bonusAttack; // Used for temporary buffs
     private int bonusResistance;
-    private boolean invincible;
+    private boolean isInvincible;
     private int cost;
     private Rarity rarity;
     private String powerName;
@@ -74,15 +67,20 @@ public abstract class Card {
 
         this.bonusAttack = 0;
         this.bonusResistance = 0;
-        this.invincible = false;
+        this.isInvincible = false;
         this.cost = cost;
         this.rarity = rarity;
         this.powerName = powerName;
         if(powerName.equals("None")) {
+            List<String> basicCardNames = new ArrayList<>(Arrays.asList(
+                    "Henry", "Jenn", "Carrie", "William", "Samantha", "Michelle", "Barry",
+                    "Michael", "Daniel", "Victoria", "Ben", "Patrick", "Edward", "Nick",
+                    "Lenard", "George", "Mary", "Alyssa", "Ted", "Robin"));
             this.name = basicCardNames.get(Harpspoon.nextInt(0, basicCardNames.size() - 1));
             power = new NoPower();
         }
         else{
+            Map<String, String> rareNames = createMap();
             this.name = rareNames.get(powerName);
             switch (powerName){
                 case "Angry":
@@ -128,7 +126,7 @@ public abstract class Card {
         this.baseAttack = baseAttack;
         bonusAttack = 0;
         bonusResistance = 0;
-        invincible = false;
+        isInvincible = false;
         cost = 0;
         this.rarity = rarity;
         this.powerName = powerName;
@@ -148,8 +146,8 @@ public abstract class Card {
         return currHealth;
     }
 
-    public void gainCurrHealth(int amount){
-        currHealth += amount;
+    public void incrementHealth(){
+        currHealth += 1;
     }
 
     public int getBaseAttack() {
@@ -176,12 +174,12 @@ public abstract class Card {
         this.bonusResistance = bonusResistance;
     }
 
-    public boolean isInvincible() {
-        return invincible;
+    boolean isInvincible(){
+        return isInvincible;
     }
 
-    public void setInvincible(boolean invincible) {
-        this.invincible = invincible;
+    public void makeInvincible() {
+        this.isInvincible = true;
     }
 
     public int getCost() {
@@ -192,16 +190,12 @@ public abstract class Card {
         return rarity;
     }
 
-    public String getPowerName(){
+    String getPowerName(){
         return powerName;
     }
 
     public Power getPower(){
         return power;
-    }
-
-    public void setPower(Power power){
-        this.power = power;
     }
 
     public String getAbbrevRep() {
@@ -232,7 +226,7 @@ public abstract class Card {
     public int sustainDamage(int damage){
         int healthBeforeHit = currHealth;
         int remainingDamage = damage - currHealth;
-        if(!invincible){
+        if(!isInvincible){
             currHealth = (currHealth - damage) + bonusResistance;
             if(currHealth < 0){
                 System.out.println(name + " takes " + (healthBeforeHit) + " damage!");
@@ -244,7 +238,7 @@ public abstract class Card {
         }
         else{
             System.out.println(name + " takes no damage!");
-            invincible = false;
+            isInvincible = false;
         }
         setAbbrevRep();
         if(remainingDamage < 0)

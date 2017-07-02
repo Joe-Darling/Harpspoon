@@ -8,7 +8,7 @@ import game.Harpspoon;
  */
 public class CommonCardTest {
 
-    // This method tests the CommonCard class and the general card class.
+    // This method tests the CommonCard class and the base card class.
     public static void main(String[] args) {
         Harpspoon.rng.setSeed(0);
         CommonCard c1 = new CommonCard();

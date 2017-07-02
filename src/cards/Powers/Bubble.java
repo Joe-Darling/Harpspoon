@@ -4,6 +4,7 @@ import cards.Card;
 
 /**
  * Created by Joe on 6/23/2017.
+ * Power class for bubble
  */
 public class Bubble extends Power{
 
@@ -18,7 +19,7 @@ public class Bubble extends Power{
     }
 
     public Card triggerEffect(Card card) {
-        card.setInvincible(true);
+        card.makeInvincible();
         System.out.println(card.getName() + "'s bubble shield protected him from the attack!");
         usedEffect = true;
         return null;

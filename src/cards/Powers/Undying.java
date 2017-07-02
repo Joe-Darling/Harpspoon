@@ -18,7 +18,7 @@ public class Undying extends Power{
     }
 
     public Card triggerEffect(Card card) {
-        card.gainCurrHealth(1);
+        card.incrementHealth();
         System.out.println(card.getName() + " is undying! He survives the attack with 1 hp.");
         usedEffect = true;
         return null;

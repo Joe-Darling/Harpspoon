@@ -5,6 +5,7 @@ import game.Harpspoon;
 
 /**
  * Created by Joe on 6/22/2017.
+ * Dodge power class
  */
 public class Dodge extends Power {
 
@@ -13,8 +14,8 @@ public class Dodge extends Power {
     }
 
     public Card triggerEffect(Card card) {
-        card.setInvincible(true);
-        System.out.println(card.getName() + " ninja dodges the attack!");
+        card.makeInvincible();
+        System.out.println(card.getName() + " dodges the attack!");
         return null;
     }
 }
