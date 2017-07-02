@@ -95,6 +95,8 @@ public class Harpspoon {
                 return new Cleric(gamesToPlay);
             case "fighter":
                 return new Fighter(gamesToPlay);
+            case "dragon":
+                return new Dragon(gamesToPlay);
             default:
                 System.out.println("Invalid input, exiting game.");
                 System.exit(0);
