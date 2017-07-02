@@ -13,9 +13,9 @@ import java.util.List;
  */
 public abstract class Player {
     private static final int CARDS_IN_DECK = 40;
+    private final int STARTING_SCORE = 100;
 
     private String name;
-    private final int startingScore = 100;
     private int currScore;
     private List<Card> deck;
     private List<Card> hand;
@@ -25,24 +25,26 @@ public abstract class Player {
     private int currMana;
 
     public Player(String name){
+        currScore = STARTING_SCORE;
         this.name = name;
-        newGame();
     }
 
     public abstract Card playACard();
     public abstract boolean continuePlaying();
 
     public void loseHealth(int amount){
-        System.out.println(getName() + " is attacked directly for " + amount + " damage!");
         currScore -= amount;
         if(currScore < 0)
             currScore = 0;
+
+        System.out.println(getName() + " is attacked directly for " + amount + " damage!");
         System.out.println(name + " has " + currScore + " life remaining.");
+
+        Harpspoon.reporter.addStringToReport("PLAYER DAMAGED:" + name + ":damage dealt=" + amount +
+                ":remaining score=" + currScore);
     }
 
     public void newGame(){
-
-        currScore = startingScore;
         totalMana = 0;
         currMana = 0;
 
@@ -61,11 +63,10 @@ public abstract class Player {
         }
         Collections.shuffle(deck, Harpspoon.rng);
 
-        hand = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
-            hand.add(deck.remove(deck.size()-1));
-        }
+        Harpspoon.reporter.addStringToReport("PLAYER DECK CREATED");
+        Harpspoon.reporter.addStringToReport(dispDeck());
 
+        hand = new ArrayList<>();
         cardsInPlay = new ArrayList<>();
         discardPile = new ArrayList<>();
     }
@@ -74,12 +75,13 @@ public abstract class Player {
         if(totalMana < 10)
             totalMana++;
         currMana = totalMana;
-        drawCards(1);
     }
 
     public void drawCards(int n){
         for(int i = 0; i < n; i++){
-            hand.add(deck.remove(deck.size()-1));
+            Card card = deck.remove(deck.size()-1);
+            Harpspoon.reporter.addStringToReport("CARD DRAWN:" + name + ":" + card.getAbbrevRep());
+            hand.add(card);
         }
     }
 
@@ -88,6 +90,8 @@ public abstract class Player {
         hand.remove(card);
         cardsInPlay.add(card);
         System.out.println(name + " summons " + card.inGamePrint() + "!");
+        Harpspoon.reporter.addStringToReport("CARD PLAYED:" + name + ":" + card.getAbbrevRep() +
+                ":remaining resource points=" + currMana);
     }
 
     public void discardCard(Card card){
@@ -134,5 +138,43 @@ public abstract class Player {
 
     public int getCurrMana() {
         return currMana;
+    }
+
+    public String playerPrint(int score){
+        return "  Player{name=" + name + ",total resource points=" + totalMana + ",starting score=" + STARTING_SCORE +
+                ",current score=" + currScore + ",total score=" + score + "}";
+    }
+
+    public String dispDeck(){
+        String output = "  " + name;
+        for(int i = 0; i < deck.size(); i++){
+            if(i % 5 == 0)
+                output += "\n  ";
+            output += deck.get(i).getAbbrevRep();
+        }
+        return output;
+    }
+
+    public String dispHand(){
+        String output = "CARDS IN HAND:" + name;
+
+        for(int i = 0; i < hand.size(); i++){
+            if(i % 5 == 0)
+                output += "\n  ";
+            output += hand.get(i).getAbbrevRep();
+        }
+        return output;
+    }
+
+    public String dispCardsInPlay(){
+        String output = "CARDS IN PLAY:" + name;
+        if(cardsInPlay.size() == 0)
+            output += "\n--NO CARDS IN PLAY--";
+        for(int i = 0; i < cardsInPlay.size(); i++){
+            if(i % 5 == 0)
+                output += "\n  ";
+            output += cardsInPlay.get(i).getAbbrevRep();
+        }
+        return output;
     }
 }

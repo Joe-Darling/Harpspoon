@@ -11,14 +11,17 @@ import java.util.*;
  * Created by Joe on 6/21/2017.
  */
 public class Harpspoon {
-    /** the single instance of the random number generator */
+    // The single instance of the random number generator
+    // Made static so test classes can use them for consistency.
     public final static Random rng = new Random();
-
-    /** the seed the random number generator will use */
     public final static int SEED = 0;
     public static int nextInt(int min, int max) {
         return rng.nextInt(max - min + 1) + min;
     }
+
+    // The single instance of the reporter Object.
+    // Reporter Made static so all classes can add to report without having to constantly pass in reporter object.
+    public static Reporter reporter = new Reporter();
 
     private Scanner scanner;
 
@@ -28,6 +31,7 @@ public class Harpspoon {
     private int player2TotalScore;
     private boolean pauseForDrama;
     private int turnCounter;
+
 
     public Harpspoon(){
         scanner = new Scanner(System.in);
@@ -39,11 +43,11 @@ public class Harpspoon {
         }
         else if(humans == 1){
             player1 = new Human();
-            player2 = getPlayer();
+            player2 = createNewComputerPlayer();
         }
         else if(humans == 0){
-            player1 = getPlayer();
-            player2 = getPlayer();
+            player1 = createNewComputerPlayer();
+            player2 = createNewComputerPlayer();
         }
         else{
             System.out.println("Invalid input, exiting game.");
@@ -51,8 +55,9 @@ public class Harpspoon {
         }
 
         if(player1.getName().equals(player2.getName())){
-            System.out.println("Both players have the same name, player two's name is adjusted for clarity");
-            player2.setName(player2.getName() + "2");
+            System.out.println("Both players have the same name, player names are adjusted for clarity");
+            player1.setName(player1.getName() + "-1");
+            player2.setName(player2.getName() + "-2");
         }
         scanner.nextLine();
         System.out.print("Pause for dramatic effect? (Y/N): ");
@@ -60,7 +65,23 @@ public class Harpspoon {
         System.out.print("\n");
     }
 
-    private Player getPlayer(){
+    public Player getPlayer1(){
+        return player1;
+    }
+
+    public Player getPlayer2(){
+        return player2;
+    }
+
+    public int getPlayer1TotalScore(){
+        return player1TotalScore;
+    }
+
+    public int getPlayer2TotalScore(){
+        return player2TotalScore;
+    }
+
+    private Player createNewComputerPlayer(){
         System.out.print("Enter class for AI player: ");
         String aiClass = scanner.next().toLowerCase();
         scanner.nextLine();
@@ -82,11 +103,19 @@ public class Harpspoon {
         return null;
     }
 
-    private void game(){
+    private boolean game(){
+        player1.newGame();
+        player2.newGame();
+        player1.drawCards(4);
+        player2.drawCards(4);
         while(player1.getCurrScore() > 0 && player2.getCurrScore() > 0){
             // At the beginning of each round both players call their new round method
+            reporter.addStringToReport("ROUND STARTED");
             player1.newRound();
             player2.newRound();
+            reporter.addPlayerStats(this);
+            player1.drawCards(1);
+            player2.drawCards(1);
 
             // Then for each card in play we check if they have a turn start effect
             for(Card card : player1.getCardsInPlay())
@@ -116,15 +145,14 @@ public class Harpspoon {
             player1TotalScore += player1.getCurrScore();
             player2TotalScore += player2.getCurrScore();
         }
-        if(player1.continuePlaying() && player2.continuePlaying()){
-            player1.newGame();
-            player2.newGame();
-            game();
-        }
+        reporter.addStringToReport("GAME OVER, MAN");
+        reporter.addPlayerStats(this);
+        return player1.continuePlaying() && player2.continuePlaying();
     }
 
     private void takeTurn(Player player){
         Card card;
+        reporter.addStringToReport(player.dispHand());
         do{
             card = player.playACard();
             if(card != null) {
@@ -142,7 +170,7 @@ public class Harpspoon {
     private void battle(){
         int player1Damage = 0;
         int player2Damage = 0;
-        // First we tally up the damage on call check if any effects trigger on attack
+        // First we tally up the damage and check if any effects trigger on attack
         for(Card card : player1.getCardsInPlay()){
             if(card.getPower().shouldEffectTrigger(card, Power.CardState.ON_ATTACK)){
                 card.getPower().triggerEffect(card);
@@ -151,6 +179,8 @@ public class Harpspoon {
             player1Damage += card.getBaseAttack() + card.getBonusAttack();
             card.setBonusAttack(0);
         }
+        reporter.addStringToReport(player1.dispCardsInPlay());
+        reporter.addStringToReport("DAMAGE CALCULATED:" + player1.getName() + ":total damage=" + player1Damage);
         for(Card card : player2.getCardsInPlay()){
             if(card.getPower().shouldEffectTrigger(card, Power.CardState.ON_ATTACK)){
                 card.getPower().triggerEffect(card);
@@ -159,6 +189,9 @@ public class Harpspoon {
             player2Damage += card.getBaseAttack() + card.getBonusAttack();
             card.setBonusAttack(0);
         }
+        reporter.addStringToReport(player2.dispCardsInPlay());
+        reporter.addStringToReport("DAMAGE CALCULATED:" + player2.getName() + ":total damage=" + player2Damage);
+
         dealDamage(player1, player2, player1Damage);
         dealDamage(player2, player1, player2Damage);
     }
@@ -181,6 +214,8 @@ public class Harpspoon {
                     pauseForDramaticEffect();
                 }
                 playerDamage = card.sustainDamage(playerDamage);
+                reporter.addStringToReport("CARD DAMAGED:" + p2.getName() + ":" + card.getAbbrevRep() +
+                "damage remaining=" + playerDamage);
                 if(card.getPower().shouldEffectTrigger(card, Power.CardState.ON_ATTACKED)){
                     card.getPower().triggerEffect(card);
                     pauseForDramaticEffect();
@@ -190,6 +225,7 @@ public class Harpspoon {
                         p2.summonCard(card.getPower().triggerEffect(card));
                         pauseForDramaticEffect();
                     }
+                    reporter.addStringToReport("CARD DISCARDED:" + p2.getName() + ":" + card.getAbbrevRep());
                     p2.discardCard(card);
                     ind--;
                 }
@@ -235,7 +271,13 @@ public class Harpspoon {
         //rng.setSeed(80);
         System.out.println("Welcome to Harpspoon!");
         Harpspoon harpspoon = new Harpspoon();
-        harpspoon.game();
+        boolean playAgain;
+        do{
+            reporter.newReport(harpspoon);
+            playAgain = harpspoon.game();
+            System.out.println("Report of the game:");
+            reporter.printReport();
+        }while (playAgain);
         System.out.println("Thanks for playing!");
     }
 }

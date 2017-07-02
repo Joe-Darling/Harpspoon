@@ -41,7 +41,7 @@ public abstract class Card {
         map.put("Undying" , "Alec - The Undying");
         map.put("Angry", "Chris - The Forgotten");
         map.put("Wrath", "Logan - The Unhinged");
-        map.put("Mommy!", "Joe - The Destroyer of Worlds");
+        map.put("Mommy", "Joe - The Destroyer of Worlds");
         map.put("Bubble", "Sola - The Defender of Justice");
         map.put("Companion", "Cassandra - The Protector");
         map.put("Vengeful", "Karis - The Forsaken");
@@ -209,7 +209,7 @@ public abstract class Card {
     }
 
     public void setAbbrevRep() {
-        String abbrevRep = "";
+        String abbrevRep = "[";
         abbrevRep += rarity.getLabel() + Character.toString(powerName.charAt(0)) + ":";
         if(cost < 10)
             abbrevRep += "0" + Integer.toString(cost) + ":";
@@ -225,6 +225,7 @@ public abstract class Card {
             abbrevRep += "0" + Integer.toString(currHealth);
         else
             abbrevRep += Integer.toString(currHealth);
+        abbrevRep += "]";
         this.abbrevRep = abbrevRep;
     }
 
@@ -238,13 +239,14 @@ public abstract class Card {
                 currHealth = 0;
             }
             else
-                System.out.println(name + " take " + (damage - bonusResistance) + " damage!");
+                System.out.println(name + " takes " + (damage - bonusResistance) + " damage!");
             bonusResistance = 0;
         }
         else{
             System.out.println(name + " takes no damage!");
             invincible = false;
         }
+        setAbbrevRep();
         if(remainingDamage < 0)
             return 0;
         return remainingDamage;
