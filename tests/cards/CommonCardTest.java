@@ -8,7 +8,7 @@ import game.Harpspoon;
  */
 public class CommonCardTest {
 
-    // This method tests the CommonCard class and the card class.
+    // This method tests the CommonCard class and the general card class.
     public static void main(String[] args) {
         Harpspoon.rng.setSeed(0);
         CommonCard c1 = new CommonCard();
@@ -19,7 +19,7 @@ public class CommonCardTest {
         System.out.println("Card health is 7? " + (c1.getCurrHealth() == 7 ? "OK":"NO"));
         System.out.println("Card rarity is common? " + (c1.getRarity() == Card.Rarity.COMMON ? "OK":"NO"));
         System.out.println("Card powerName is None? " + (c1.getPowerName().equals("None") ? "OK":"NO"));
-        System.out.println("Effect trigger false?? " +
+        System.out.println("Effect trigger false? " +
                 (!c1.getPower().shouldEffectTrigger(c1, Power.CardState.ON_DEATH) ? "OK":"NO"));
         System.out.println("Card Abbrev correct? " + (c1.getAbbrevRep().equals("[CN:01:01:07]") ? "OK":"NO"));
         int remainingDamage = c1.sustainDamage(3);

@@ -17,6 +17,7 @@ public abstract class Player {
 
     private String name;
     private int currScore;
+    private int totalDamage; // The total damage the player has on board
     private List<Card> deck;
     private List<Card> hand;
     private List<Card> cardsInPlay;
@@ -25,8 +26,8 @@ public abstract class Player {
     private int currMana;
 
     public Player(String name){
-        currScore = STARTING_SCORE;
         this.name = name;
+        totalDamage = 0;
     }
 
     public abstract Card playACard();
@@ -45,9 +46,9 @@ public abstract class Player {
     }
 
     public void newGame(){
+        currScore = STARTING_SCORE;
         totalMana = 0;
         currMana = 0;
-
         // We create, add cards to, and then randomize the deck.
         deck = new ArrayList<>(CARDS_IN_DECK);
 
@@ -62,9 +63,6 @@ public abstract class Player {
                 deck.add(new LegendaryCard());
         }
         Collections.shuffle(deck, Harpspoon.rng);
-
-        Harpspoon.reporter.addStringToReport("PLAYER DECK CREATED");
-        Harpspoon.reporter.addStringToReport(dispDeck());
 
         hand = new ArrayList<>();
         cardsInPlay = new ArrayList<>();
@@ -108,12 +106,24 @@ public abstract class Player {
         this.name = name;
     }
 
+    public int getSTARTING_SCORE(){
+        return STARTING_SCORE;
+    }
+
     public int getCurrScore() {
         return currScore;
     }
 
     public void setCurrScore(int currScore) {
         this.currScore = currScore;
+    }
+
+    public int getTotalDamage() {
+        return totalDamage;
+    }
+
+    public void setTotalDamage(int totalDamageOnBoard) {
+        this.totalDamage = totalDamageOnBoard;
     }
 
     public List<Card> getDeck(){
