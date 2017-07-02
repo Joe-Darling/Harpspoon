@@ -18,7 +18,7 @@ public class UncommonCardTest {
         System.out.println("Card rarity is Uncommon? " + (c1.getRarity() == Card.Rarity.UNCOMMON ? "OK":"NO"));
         System.out.println("Card powerName is Vigor? " + (c1.getPowerName().equals("Vigor") ? "OK":"NO"));
         System.out.println("Card power is not null? " + (c1.getPower() != null ? "OK":"NO"));
-        System.out.println("Card Abbrev correct? " + (c1.getAbbrevRep().equals("UV:04:04:08") ? "OK":"NO"));
+        System.out.println("Card Abbrev correct? " + (c1.getAbbrevRep().equals("[UV:04:04:08]") ? "OK":"NO"));
         int remainingDamage = c1.sustainDamage(4);
         System.out.println("Card health is 4? " + (c1.getCurrHealth() == 4 ? "OK":"NO"));
         System.out.println("Damage returned == 0? " + (remainingDamage == 0 ? "OK":"NO"));

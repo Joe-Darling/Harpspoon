@@ -15,8 +15,8 @@ public abstract class ComputerPlayer extends Player{
     }
 
     public boolean continuePlaying() {
-        gamesToPlay--;
-        return gamesToPlay == -1 || gamesToPlay != 0;
+        gamesToPlay -= 1;
+        return gamesToPlay != 0;
     }
 
     public abstract Card playACard();

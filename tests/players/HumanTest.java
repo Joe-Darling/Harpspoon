@@ -10,7 +10,9 @@ public class HumanTest {
     public static void main(String[] args) {
         Harpspoon.rng.setSeed(3);
         Player p1 = new Human();
-
+        p1.newGame();
+        p1.drawCards(4);
+        p1.newRound();
         System.out.println("You entered '" + p1.getName() + "', right?");
 
         System.out.println("\nTry picking an invalid card.\n");

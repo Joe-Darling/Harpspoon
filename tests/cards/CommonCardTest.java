@@ -21,7 +21,7 @@ public class CommonCardTest {
         System.out.println("Card powerName is None? " + (c1.getPowerName().equals("None") ? "OK":"NO"));
         System.out.println("Effect trigger false?? " +
                 (!c1.getPower().shouldEffectTrigger(c1, Power.CardState.ON_DEATH) ? "OK":"NO"));
-        System.out.println("Card Abbrev correct? " + (c1.getAbbrevRep().equals("CN:01:01:07") ? "OK":"NO"));
+        System.out.println("Card Abbrev correct? " + (c1.getAbbrevRep().equals("[CN:01:01:07]") ? "OK":"NO"));
         int remainingDamage = c1.sustainDamage(3);
         System.out.println("Card health is 4? " + (c1.getCurrHealth() == 4 ? "OK":"NO"));
         System.out.println("Damage returned == 0? " + (remainingDamage == 0 ? "OK":"NO"));
