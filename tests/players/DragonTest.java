@@ -77,7 +77,7 @@ public class DragonTest {
         p1.drawCards(1);
         for (Card card : p1.getHand())
             System.out.println(card);
-        correctCard = p1.getHand().get(0);
+        correctCard = p1.getHand().get(2);
         c = p1.playACard();
         p1.summonCard(c);
         System.out.println("Did Dragon Summon stored Card? " + (correctCard.equals(c) ? "OK" : "NO") + "\n");
@@ -95,7 +95,7 @@ public class DragonTest {
         p1.drawCards(1);
         for (Card card : p1.getHand())
             System.out.println(card);
-        correctCard = p1.getHand().get(0);
+        correctCard = p1.getHand().get(1);
         c = p1.playACard();
         p1.summonCard(c);
         System.out.println("Did Dragon pick 10 mana card on 10 mana? " + (correctCard.equals(c) ? "OK" : "NO") + "\n");

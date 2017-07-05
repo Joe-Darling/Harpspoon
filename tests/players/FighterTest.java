@@ -32,7 +32,7 @@ public class FighterTest {
         p1.drawCards(1);
         for(Card card : p1.getHand())
             System.out.println(card);
-        correctCard = p1.getHand().get(4);
+        correctCard = p1.getHand().get(3);
         c = p1.playACard();
         p1.summonCard(c);
         System.out.println("Did Fighter pick right card? " + (correctCard.equals(c) ? "OK" : "NO") + "\n");
