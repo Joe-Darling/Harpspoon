@@ -4,6 +4,21 @@ import cards.Card;
 
 /**
  * Created by Joe on 7/1/2017.
+ * In my small amount of play testing I've decided the strongest strategy is to play a strong defensive card
+ * to tank the damage (since units are attacked in the order played) and then follow up with a strong offensive
+ * Card to hopefully get in multiple attacks since it is protected by the defensive unit. So the best option would
+ * be to alternate between offensive and defensive units. However what would make it stronger would be to play
+ * around the opponents board with units like Alec the undying, but that would require implementation change and
+ * I'm lazy. So this (I believe) is the best strategy when you can't see the opponents board.
+ *
+ * In testing (1000 games each) this algorithm went:
+ * 769 wins - 230 loses vs. mage
+ * 820 wins - 179 loses vs. cleric
+ * 795 wins - 203 loses vs. fighter
+ *
+ * Note: Ties didn't factor into either side winning
+ * Note: Those aren't the 'total score points' those are 1000 individual games
+ * It is a quite formidable opponent. Try it out!
  */
 public class Dragon extends ComputerPlayer{
 
@@ -22,31 +37,13 @@ public class Dragon extends ComputerPlayer{
     }
 
     // Checks if you have a legendary card in your hand
-    public boolean isThereA10CostInMyHand(){
+    private boolean isThereA10CostInMyHand(){
         for (Card card : getHand()) {
             if(card.getCost() == 10)
                 return true;
         }
         return false;
     }
-
-    /*
-     * In my small amount of play testing I've decided the strongest strategy is to play a strong defensive card
-     * to tank the damage (since units are attacked in the order played) and then follow up with a strong offensive
-     * Card to hopefully get in multiple attacks since it is protected by the defensive unit. So the best option would
-     * be to alternate between offensive and defensive units. However what would make it stronger would be to play
-     * around the opponents board with units like Alec the undying, but that would require implementation change and
-     * I'm lazy. So this (I believe) is the best strategy when you can't see the opponents board.
-     *
-     * In testing (1000 games each) this algorithm went:
-     * 769 wins - 230 loses vs. mage
-     * 820 wins - 179 loses vs. cleric
-     * 795 wins - 203 loses vs. fighter
-     *
-     * Note: Ties didn't factor into either side winning
-     * Note: Those aren't the 'total score points' those are 1000 individual games
-     * It is a quite formidable opponent. Try it out!
-     */
     public Card playACard(){
         Card strongestPlayableCard = null; // Highest attack playable card in our hand
         Card bestPlay = null;
