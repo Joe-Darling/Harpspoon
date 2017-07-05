@@ -5,6 +5,7 @@ import game.Harpspoon;
 
 /**
  * Created by Joe on 7/1/2017.
+ * Dragon test class
  */
 public class DragonTest {
     public static void main(String[] args) {
