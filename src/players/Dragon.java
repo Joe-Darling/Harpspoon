@@ -83,21 +83,23 @@ public class Dragon extends ComputerPlayer{
 
                 if(strongestPlayableCard != null){
                     for (Card card : getHand()) { // For each card in our hand
-                        if (bestPlay == null) { // If we haven't found a legal card yet
-                            // Check if any card has legal mana cost after subtracting the strongest
-                            if (card.getCost() <= getCurrMana() - strongestPlayableCard.getCost()) {
-                                bestPlay = card; // and set it as our best for this play
-                                // We then set the strongest card for next play
-                                cardIWantToPlay = strongestPlayableCard;
+                        if(card != strongestPlayableCard) {
+                            if (bestPlay == null) { // If we haven't found a legal card yet
+                                // Check if any card has legal mana cost after subtracting the strongest
+                                if (card.getCost() <= getCurrMana() - strongestPlayableCard.getCost()) {
+                                    bestPlay = card; // and set it as our best for this play
+                                    // We then set the strongest card for next play
+                                    cardIWantToPlay = strongestPlayableCard;
+                                }
+                            } else { // Otherwise set it to the highest health card that is within remaining current mana
+                                if (card.getBaseHealth() > bestPlay.getBaseHealth()
+                                        && card.getCost() <= getCurrMana() - strongestPlayableCard.getCost())
+                                    bestPlay = card;
+                                    // In case of a tie in health the higher attack wins.
+                                else if (card.getCost() == bestPlay.getCost()
+                                        && card.getBaseAttack() > bestPlay.getBaseAttack())
+                                    bestPlay = card;
                             }
-                        } else { // Otherwise set it to the highest health card that is within remaining current mana
-                            if (card.getBaseHealth() > bestPlay.getBaseHealth()
-                                    && card.getCost() <= getCurrMana() - strongestPlayableCard.getCost())
-                                bestPlay = card;
-                                // In case of a tie in health the higher attack wins.
-                            else if (card.getCost() == bestPlay.getCost()
-                                    && card.getBaseAttack() > bestPlay.getBaseAttack())
-                                bestPlay = card;
                         }
                     }
                 }
