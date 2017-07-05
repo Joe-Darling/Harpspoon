@@ -22,7 +22,8 @@ public class Fighter extends ComputerPlayer{
                 if(card.getBaseAttack() > bestPlay.getBaseAttack() && card.getCost() <= getCurrMana())
                     bestPlay = card;
                     // In case of a tie in attack the higher health wins.
-                else if(card.getCost() == bestPlay.getCost() && card.getBaseHealth() > bestPlay.getBaseHealth())
+                else if(card.getBaseAttack() == bestPlay.getBaseAttack() &&
+                        card.getBaseHealth() > bestPlay.getBaseHealth())
                     bestPlay = card;
             }
         }

@@ -22,7 +22,7 @@ public class Cleric extends ComputerPlayer{
                 if(card.getBaseHealth() > bestPlay.getBaseHealth() && card.getCost() <= getCurrMana())
                     bestPlay = card;
                     // In case of a tie in health the lower cost wins.
-                else if(card.getCost() == bestPlay.getCost() && card.getCost() < bestPlay.getCost())
+                else if(card.getBaseHealth() == bestPlay.getBaseHealth() && card.getCost() < bestPlay.getCost())
                     bestPlay = card;
             }
         }
